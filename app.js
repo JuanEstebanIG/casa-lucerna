@@ -1,4 +1,34 @@
 (() => {
+  // ============================================================
+  // 0. MENÚ HAMBURGUESA MÓVIL
+  // ============================================================
+  const navToggle = document.getElementById("nav-toggle");
+  const siteNav = document.getElementById("site-nav");
+
+  if (navToggle && siteNav) {
+    function setNavOpen(open) {
+      navToggle.setAttribute("aria-expanded", String(open));
+      navToggle.setAttribute("aria-label", open ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+      siteNav.classList.toggle("is-open", open);
+    }
+
+    navToggle.addEventListener("click", () => {
+      const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+      setNavOpen(!isOpen);
+    });
+
+    siteNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setNavOpen(false));
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") {
+        setNavOpen(false);
+        navToggle.focus();
+      }
+    });
+  }
+
   const CATS = {
     mikan: {
       name: "Mikan",
