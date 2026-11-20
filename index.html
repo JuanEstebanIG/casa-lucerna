@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casa Lucerna — Salón de té nocturno y casa puente para gatos en Coyoacán</title>
+  <meta name="description" content="Un jardín tranquilo en Coyoacán para tomar té de hoja suelta bajo la farola y conocer a los gatos rescatados que buscan hogar.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 44'%3E%3Crect width='36' height='44' rx='8' fill='%23131B32'/%3E%3Cpath d='M9 39 V12 C9 7 14 5 19 5 C23 5 25 8 25 11 V13' fill='none' stroke='%23A9B5D1' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpolygon points='18,17 31,17 28,28 21,28' fill='%23EBB55C'/%3E%3Cpath d='M16 17 L24.5 12 L33 17 Z' fill='%23A9B5D1'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,SOFT,wght@0,9..144,60,400;0,9..144,60,500;0,9..144,60,600;1,9..144,60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="site-header" id="inicio">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Casa Lucerna, inicio">
+        <svg class="brand-mark" viewBox="0 0 36 44" width="28" height="34" aria-hidden="true">
+          <path d="M9 41 V11 C9 5 14 3 19 3 C23 3 25 6 25 10 V12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M9 17 C13 15 15 11 19 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <polygon points="18,16 32,16 29,28 21,28" class="mark-glass"/>
+          <path d="M16 16 L25 11 L34 16 Z" fill="currentColor"/>
+          <path d="M19 28 L31 28 L25 32 Z" fill="currentColor"/>
+          <circle cx="25" cy="22" r="9" class="mark-glow"/>
+        </svg>
+        <span class="brand-name">Casa Lucerna</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="#residentes">Residentes</a>
+        <a href="#carta">Carta nocturna</a>
+        <a href="#visitas">Visitas y adopción</a>
+        <a class="nav-cta" href="#reservar">Reservar mesa</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- HERO NOCTURNO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title">Un jardín tranquilo para tomar té bajo la farola, con gatos que buscan hogar.</h1>
+          <p class="hero-lead">
+            Abrimos cada tarde cuando baja el sol en Coyoacán. Solo diez lugares por turno, teteras tibias de hoja suelta y cuatro gatos rescatados que caminan libres entre las mesas y el patio.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#reservar">Reservar una mesa</a>
+            <a class="btn-ghost" href="#residentes">Conocer a los residentes</a>
+          </div>
+          <dl class="hero-practical">
+            <div>
+              <dt>Horario nocturno</dt>
+              <dd>Miércoles a domingo, 17:00 a 23:00</dd>
+            </div>
+            <div>
+              <dt>Dirección</dt>
+              <dd>Calle de la Higuera 48, Coyoacán</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="hero-artwork">
+          <div class="artwork-stage patio-3d-stage" id="patio-3d-stage" aria-label="Escena 3D interactiva del patio nocturno de Casa Lucerna con Mikan bajo la farola">
+            <div class="patio-3d-canvas" id="patio-3d-canvas"></div>
+            <img
+              id="patio-3d-poster"
+              class="patio-3d-poster"
+              src="assets/gato-noche-hero.png"
+              alt="Mikan, un gato atigrado naranja y crema sentado en una piedra del jardín de Casa Lucerna bajo una farola encendida, flores de cerezo y luciérnagas en la noche"
+              width="1520"
+              height="1080"
+            >
+            <div class="patio-controls">
+              <span class="patio-hint" id="patio-orbit-hint">Arrastra para recorrer el patio</span>
+              <div class="patio-buttons">
+                <button type="button" class="patio-btn" id="toggle-lamp-btn" aria-pressed="true">Atenuar farola</button>
+                <button type="button" class="patio-btn" id="reset-cam-btn" hidden>Centrar vista</button>
+              </div>
+            </div>
+          </div>
+          <figcaption class="sr-only">Modelo tridimensional interactivo de Mikan en el patio nocturno de Casa Lucerna junto a la farola de hierro, las flores de cerezo y las luciérnagas.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- RESIDENTES EN ADOPCIÓN -->
+    <section class="section-paper residents" id="residentes" aria-labelledby="residents-title">
+      <div class="container">
+        <div class="section-intro">
+          <h2 id="residents-title">Los gatos que hoy viven en la casa</h2>
+          <p>
+            Cada residente llega por rescate comunitario, pasa por valoración veterinaria completa y se adapta a su ritmo antes de recibir visitas. Si sientes conexión con alguno, puedes abrir su ficha y pedir una charla con nuestro equipo.
+          </p>
+        </div>
+
+        <!-- Residente destacado: Mikan (renderizado directo de nuestra escena de Blender) -->
+        <article class="featured-cat">
+          <div class="featured-portrait">
+            <img
+              src="assets/mikan-retrato.png"
+              alt="Retrato ilustrado de Mikan, gato atigrado naranja y crema con collar rojo y cascabel dorado mirando una luciérnaga"
+              width="840"
+              height="980"
+            >
+          </div>
+          <div class="featured-details">
+            <div class="cat-status">
+              <span class="status-dot status-open" aria-hidden="true"></span>
+              <span>Disponible para adopción</span>
+            </div>
+            <h3>Mikan</h3>
+            <p class="cat-meta">Macho atigrado crema y naranja, 1 año y 4 meses</p>
+            <p class="cat-bio">
+              Llegó en febrero tras pasar semanas durmiendo bajo las bugambilias de la calle Tres Cruces. Le encanta salir al patio justo cuando encendemos la farola de la entrada: persigue luciérnagas en silencio, mueve su ovillo morado cerca de los pies de quien lee y nunca rechaza una caricia detrás de las orejas.
+            </p>
+            <dl class="cat-facts">
+              <div>
+                <dt>Carácter</dt>
+                <dd>Curioso, sereno y muy platicador al anochecer</dd>
+              </div>
+              <div>
+                <dt>Convivencia</dt>
+                <dd>Se lleva bien con otros gatos tranquilos y departamentos con malla</dd>
+              </div>
+              <div>
+                <dt>Salud</dt>
+                <dd>Esterilizado, esquema completo, prueba FeLV/FIV negativa</dd>
+              </div>
+            </dl>
+            <div class="featured-actions">
+              <button type="button" class="btn-ink" data-open-cat="mikan">Leer ficha completa de Mikan</button>
+              <a class="link-quiet" href="#reservar" data-pick-cat="Mikan">Venir a conocerlo esta semana</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Otros residentes (galería escalonada orgánica, sin tarjetas SaaS) -->
+        <div class="residents-gallery" role="list">
+          <article class="resident-item" role="listitem">
+            <button type="button" class="resident-trigger" data-open-cat="kuro">
+              <div class="resident-frame frame-tall">
+                <img src="assets/kuro-retrato.png" alt="Kuro, gato negro de ojos ámbar recostado junto a una taza de té matcha en la ventana">
+              </div>
+              <div class="resident-caption">
+                <div class="resident-head">
+                  <h3>Kuro</h3>
+                  <span class="cat-age">3 años</span>
+                </div>
+                <p>Lector empedernido de repisa. Ronronea hondo cuando escucha pasar hojas de papel y suele acompañarte si pides té verde.</p>
+                <span class="resident-more">Ver historia y cuidados</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="resident-item resident-offset" role="listitem">
+            <button type="button" class="resident-trigger" data-open-cat="yuzu">
+              <div class="resident-frame frame-square">
+                <img src="assets/yuzu-retrato.png" alt="Yuzu, gata calicó esponjosa descansando en un cojín índigo junto a una lámpara cálida">
+              </div>
+              <div class="resident-caption">
+                <div class="resident-head">
+                  <h3>Yuzu</h3>
+                  <span class="cat-age">2 años</span>
+                </div>
+                <p>Dueña oficial del cojín junto a la lámpara de mesa. Observa primero desde lejos y después decide en qué regazo dormir la siesta.</p>
+                <span class="resident-more">Ver historia y cuidados</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="resident-item" role="listitem">
+            <button type="button" class="resident-trigger" data-open-cat="bochi">
+              <div class="resident-frame frame-tall">
+                <img src="assets/bochi-retrato.png" alt="Bochi, gatito gris atigrado de patitas blancas asomándose desde una canasta de mimbre">
+              </div>
+              <div class="resident-caption">
+                <div class="resident-head">
+                  <h3>Bochi</h3>
+                  <span class="cat-age">7 meses</span>
+                </div>
+                <p>Tímido los primeros diez minutos en su canasta de mimbre, pero basta un cordón de algodón para que salga dando saltitos suaves.</p>
+                <span class="resident-more">Ver historia y cuidados</span>
+              </div>
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTA DE TÉ NOCTURNA -->
+    <section class="section-night menu-section" id="carta" aria-labelledby="menu-title">
+      <div class="container">
+        <div class="menu-header">
+          <div class="menu-header-text">
+            <h2 id="menu-title">La carta de la tarde</h2>
+            <p>
+              Preparamos cada tetera al momento con hojas de pequeños productores y pan horneado por la mañana. Tu cuota de entrada ya incluye la primera infusión.
+            </p>
+          </div>
+          <!-- Taza de cerámica dibujada con vapor suave animado -->
+          <svg class="tea-steam-svg" viewBox="0 0 110 92" width="104" height="86" aria-hidden="true">
+            <path class="steam-line steam-1" d="M36 42 C30 31 41 24 35 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path class="steam-line steam-2" d="M54 39 C49 27 60 20 53 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path class="steam-line steam-3" d="M72 42 C67 32 76 24 70 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M22 49 H82 C81 69 70 80 52 80 C34 80 23 69 22 49 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M82 54 C94 54 95 70 80 71" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 84 C32 88 72 88 90 84" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="menu-filters" role="tablist" aria-label="Filtrar carta">
+          <button type="button" class="filter-btn is-active" role="tab" aria-selected="true" data-filter="all">Toda la carta</button>
+          <button type="button" class="filter-btn" role="tab" aria-selected="false" data-filter="herbal">Sin teína</button>
+          <button type="button" class="filter-btn" role="tab" aria-selected="false" data-filter="tea">Hoja suelta</button>
+          <button type="button" class="filter-btn" role="tab" aria-selected="false" data-filter="pastry">Repostería tibia</button>
+        </div>
+
+        <div class="menu-columns" id="menu-list">
+          <div class="menu-group" data-group="tea">
+            <h3>Tés de hoja suelta</h3>
+            <ul class="menu-items">
+              <li data-cat="tea">
+                <div class="menu-row">
+                  <span class="dish-name">Hojicha tostado de Uji</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$82</span>
+                </div>
+                <p class="dish-desc">Notas cálidas de avellana y madera dulce, bajo en cafeína para tomar después de las ocho.</p>
+              </li>
+              <li data-cat="tea">
+                <div class="menu-row">
+                  <span class="dish-name">Genmaicha con arroz inflado</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$86</span>
+                </div>
+                <p class="dish-desc">Sencha verde de cosecha temprana combinado con granos de arroz tostado crujiente.</p>
+              </li>
+              <li data-cat="tea">
+                <div class="menu-row">
+                  <span class="dish-name">Oolong de durazno y flor de osmanto</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$94</span>
+                </div>
+                <p class="dish-desc">Aromático y sedoso, servido en tetera de barro con segunda infusión de cortesía.</p>
+              </li>
+              <li data-cat="tea">
+                <div class="menu-row">
+                  <span class="dish-name">Matcha batido con leche de avena</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$98</span>
+                </div>
+                <p class="dish-desc">Grado ceremonial batido a mano en chawan, tibio o con hielo grande.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="menu-group" data-group="herbal">
+            <h3>Infusiones nocturnas sin teína</h3>
+            <ul class="menu-items">
+              <li data-cat="herbal">
+                <div class="menu-row">
+                  <span class="dish-name">Manzanilla de campo, pera y miel de azahar</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$74</span>
+                </div>
+                <p class="dish-desc">Flor entera de Texcoco infusionada con láminas de pera deshidratada.</p>
+              </li>
+              <li data-cat="herbal">
+                <div class="menu-row">
+                  <span class="dish-name">Rooibos con cáscara de mandarina y canela</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$78</span>
+                </div>
+                <p class="dish-desc">Suave, especiado y naturalmente dulce, pensado para tardes frescas de patio.</p>
+              </li>
+              <li data-cat="herbal">
+                <div class="menu-row">
+                  <span class="dish-name">Flor de cerezo, tila y lavanda suave</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$84</span>
+                </div>
+                <p class="dish-desc">Infusión floral ligera y serena; nuestra favorita del último turno.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="menu-group menu-group-full" data-group="pastry">
+            <h3>Repostería tibia de la cocina</h3>
+            <ul class="menu-items menu-items-two-col">
+              <li data-cat="pastry">
+                <div class="menu-row">
+                  <span class="dish-name">Dorayaki tibio de frijol rojo dulce</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$76</span>
+                </div>
+                <p class="dish-desc">Dos bizcochos esponjosos a la plancha con pasta anko preparada en casa.</p>
+              </li>
+              <li data-cat="pastry">
+                <div class="menu-row">
+                  <span class="dish-name">Panqué de yuzu con glaseado cítrico</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$82</span>
+                </div>
+                <p class="dish-desc">Rebanada tibia de miga húmeda con ralladura fresca de limón amarillo y yuzu.</p>
+              </li>
+              <li data-cat="pastry">
+                <div class="menu-row">
+                  <span class="dish-name">Galletas de mantequilla y ajonjolí negro</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$64</span>
+                </div>
+                <p class="dish-desc">Porción de tres piezas recién salidas del horno, ligeramente saladas.</p>
+              </li>
+              <li data-cat="pastry">
+                <div class="menu-row">
+                  <span class="dish-name">Tarta vasca pequeña de queso y vainilla</span>
+                  <span class="dish-dots" aria-hidden="true"></span>
+                  <span class="dish-price">$108</span>
+                </div>
+                <p class="dish-desc">Centro cremoso, cubierta caramelizada; ideal para compartir entre dos.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA LA VISITA Y EL PROCESO DE ADOPCIÓN -->
+    <section class="section-paper visits-section" id="visitas" aria-labelledby="visits-title">
+      <div class="container visits-grid">
+        <div class="visits-left">
+          <h2 id="visits-title">Primero su calma, después el té</h2>
+          <p>
+            Casa Lucerna no es un espectáculo: es la casa temporal de gatos que están aprendiendo a confiar. Por eso mantenemos la iluminación baja, música apenas audible y diez lugares como máximo en todo el salón y el jardín.
+          </p>
+          <ul class="house-notes">
+            <li>Dejamos que cada gato decida si quiere acercarse o seguir durmiendo en su rincón.</li>
+            <li>Si tomas fotografías, te pedimos apagar el flash y el sonido del obturador.</li>
+            <li>Los alimentos de la carta son solo para personas; a los residentes les damos su dieta veterinaria a las 20:30.</li>
+            <li>La cuota de entrada de $140 MXN incluye tu primera tetera y financia alimento, arena y consultas médicas.</li>
+          </ul>
+          <figure class="day-plate">
+            <img
+              src="assets/gato-dia-jardin.png"
+              alt="El jardín de Casa Lucerna en la tarde soleada antes de encender la farola, con Mikan sentado sobre las piedras"
+              width="1280"
+              height="1280"
+            >
+            <figcaption>El patio de la casa antes del atardecer, cuando abrimos las ventanas para ventilar el jardín.</figcaption>
+          </figure>
+        </div>
+
+        <div class="visits-right">
+          <h3>Cómo adoptas a uno de nuestros residentes</h3>
+          <p class="steps-lead">
+            No entregamos gatos el mismo día de la primera visita. Preferimos un proceso calmado que asegure una convivencia larga y feliz para ambos.
+          </p>
+          <ol class="adoption-steps">
+            <li>
+              <span class="step-num" aria-hidden="true">01</span>
+              <div>
+                <h4>Una tarde para conocerse sin prisa</h4>
+                <p>Reserva una visita regular o escribe desde la ficha del gato que te llamó la atención. Observa cómo reacciona contigo y conversa con quien lo cuida a diario.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num" aria-hidden="true">02</span>
+              <div>
+                <h4>Charla sobre tu casa y preparativos</h4>
+                <p>Revisamos juntos ventanas con protección, rutina de horarios y si ya convives con otros animales. Te ayudamos a preparar arenero, rascador y transición de alimento.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-num" aria-hidden="true">03</span>
+              <div>
+                <h4>Llegada acompañada y seguimiento</h4>
+                <p>Firmamos el acuerdo de adopción responsable sin costo comercial (solo cuota simbólica de vacunación) y nos mantenemos en contacto durante sus primeras semanas contigo.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESERVA DE MESA NOCTURNA -->
+    <section class="section-night booking-section" id="reservar" aria-labelledby="booking-title">
+      <div class="container booking-grid">
+        <div class="booking-info">
+          <h2 id="booking-title">Reserva una mesa esta tarde</h2>
+          <p>
+            Cada turno dura noventa minutos para que disfrutes tu té y el jardín sin apuro. No cobramos por adelantado: liquidas al llegar a la casa.
+          </p>
+          <dl class="booking-summary-notes">
+            <div>
+              <dt>Cuota de entrada</dt>
+              <dd>$140 MXN por persona (incluye tu primera tetera de té o infusión)</dd>
+            </div>
+            <div>
+              <dt>Edades</dt>
+              <dd>Bienvenidas personas mayores de 10 años acompañadas de un adulto</dd>
+            </div>
+            <div>
+              <dt>Cancelaciones</dt>
+              <dd>Si cambias de planes, avísanos al menos dos horas antes para liberar tu lugar</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="booking-desk">
+          <form id="booking-form" novalidate>
+            <div class="form-field">
+              <label for="booking-date">Elige el día</label>
+              <div class="date-choices" id="date-choices" role="radiogroup" aria-label="Días disponibles"></div>
+              <input type="hidden" id="booking-date" name="date">
+            </div>
+
+            <div class="form-field">
+              <span class="field-label" id="turn-label">Turno nocturno</span>
+              <div class="slot-choices" id="slot-choices" role="radiogroup" aria-labelledby="turn-label"></div>
+              <input type="hidden" id="booking-slot" name="slot">
+            </div>
+
+            <div class="form-row-two">
+              <div class="form-field">
+                <label for="guest-count">Personas</label>
+                <div class="stepper">
+                  <button type="button" id="guest-minus" aria-label="Restar una persona">−</button>
+                  <output id="guest-count" for="guest-minus guest-plus">2</output>
+                  <button type="button" id="guest-plus" aria-label="Sumar una persona">+</button>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="cat-interest">¿Quieres conocer a alguien en especial?</label>
+                <select id="cat-interest" name="cat">
+                  <option value="">Solo vengo por té y compañía</option>
+                  <option value="Mikan">Mikan (atigrado naranja)</option>
+                  <option value="Kuro">Kuro (negro de ojos ámbar)</option>
+                  <option value="Yuzu">Yuzu (calicó esponjosa)</option>
+                  <option value="Bochi">Bochi (atigrado gris)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-two">
+              <div class="form-field">
+                <label for="guest-name">Tu nombre</label>
+                <input type="text" id="guest-name" name="name" autocomplete="name" placeholder="Ej. Mariana Ortega" required>
+              </div>
+              <div class="form-field">
+                <label for="guest-email">Correo para confirmarte</label>
+                <input type="email" id="guest-email" name="email" autocomplete="email" placeholder="mariana@ejemplo.com" required>
+              </div>
+            </div>
+
+            <p class="form-error" id="booking-error" role="alert" hidden></p>
+
+            <div class="form-footer">
+              <div class="price-preview">
+                <span class="price-label">Total estimado en tienda</span>
+                <strong id="booking-total">$280 MXN</strong>
+              </div>
+              <button type="submit" class="btn-primary">Confirmar mesa</button>
+            </div>
+          </form>
+
+          <div class="booking-confirmed" id="booking-confirmed" hidden tabindex="-1">
+            <p class="confirmed-code" id="confirmed-code"></p>
+            <h3>Tu mesa quedó apartada</h3>
+            <p id="confirmed-details"></p>
+            <p class="confirmed-note">
+              Te enviamos el recordatorio con indicaciones de llegada a <span id="confirmed-email"></span>. Recuerda que no hace falta imprimir nada; basta dar tu nombre en el zaguán de Calle de la Higuera 48.
+            </p>
+            <button type="button" class="btn-ghost" id="booking-reset">Modificar o hacer otra reserva</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-name">Casa Lucerna</span>
+        <p>Salón de té nocturno y casa puente para gatos rescatados en Coyoacán. Proyecto independiente sin fines de lucro comercial en adopciones.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Dónde estamos</h4>
+        <p>Calle de la Higuera 48, Col. La Concepción<br>Coyoacán, 04020 Ciudad de México</p>
+        <p>Miércoles a domingo, 17:00 a 23:00</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contacto directo</h4>
+        <p><a href="mailto:hola@casalucerna.mx">hola@casalucerna.mx</a></p>
+        <p><a href="tel:+525548192204">+52 55 4819 2204</a> (mensajes por la tarde)</p>
+      </div>
+
+      <!-- Gato acurrucado durmiendo en paz bajo la pequeña farola -->
+      <div class="footer-illustration" aria-hidden="true">
+        <svg class="sleeping-cat-scene" viewBox="0 0 180 96" width="170" height="90">
+          <defs>
+            <radialGradient id="footerGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFE694" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#FFE694" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Pequeña farola izquierda -->
+          <path d="M26 84 V22 C26 12 34 9 42 9 C48 9 52 13 52 19 V23" fill="none" stroke="#9BA7C4" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="52" cy="34" r="24" fill="url(#footerGlow)" class="lamp-aura"/>
+          <polygon points="46,26 58,26 56,39 48,39" fill="#FFE696"/>
+          <path d="M43 26 L52 21 L61 26 Z" fill="#9BA7C4"/>
+          <!-- Línea de suelo -->
+          <path d="M12 84 Q90 81 168 84" fill="none" stroke="#39486E" stroke-width="1.6" stroke-linecap="round"/>
+          <!-- Gatito dormido respirando suavemente -->
+          <g class="cat-breathe">
+            <path d="M76 82 C75 64 90 56 108 58 C124 60 134 69 133 82 Z" fill="#2A375B" stroke="#EBB55C" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M84 68 L80 56 L91 61" fill="#2A375B" stroke="#EBB55C" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M97 62 L102 53 L106 61" fill="#2A375B" stroke="#EBB55C" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M87 72 Q91 75 95 72" fill="none" stroke="#EBB55C" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M133 78 C147 78 154 70 148 64 C143 60 138 66 142 70" fill="none" stroke="#EBB55C" stroke-width="1.8" stroke-linecap="round"/>
+          </g>
+          <!-- Una sola luciérnaga flotando tranquila -->
+          <circle class="ff-drift ff-footer" cx="122" cy="36" r="2.8" fill="#F2FF94"/>
+        </svg>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PANEL DESLIZANTE: FICHA COMPLETA DE CADA GATO -->
+  <dialog class="cat-dialog" id="cat-dialog" aria-labelledby="dialog-cat-name">
+    <div class="dialog-shell">
+      <button type="button" class="dialog-close" id="dialog-close" aria-label="Cerrar ficha">Cerrar</button>
+      <div class="dialog-body">
+        <div class="dialog-photo">
+          <img id="dialog-img" src="" alt="">
+        </div>
+        <div class="dialog-content">
+          <div class="cat-status">
+            <span class="status-dot status-open" aria-hidden="true"></span>
+            <span id="dialog-status">Disponible para adopción</span>
+          </div>
+          <h3 id="dialog-cat-name"></h3>
+          <p class="cat-meta" id="dialog-meta"></p>
+          <p id="dialog-story"></p>
+
+          <dl class="dialog-facts">
+            <div>
+              <dt>Su momento favorito</dt>
+              <dd id="dialog-ritual"></dd>
+            </div>
+            <div>
+              <dt>Hogar ideal</dt>
+              <dd id="dialog-home"></dd>
+            </div>
+            <div>
+              <dt>Estado médico</dt>
+              <dd id="dialog-health"></dd>
+            </div>
+          </dl>
+
+          <form class="adopt-mini-form" id="adopt-form" novalidate>
+            <h4 id="adopt-heading">Pedir charla de adopción</h4>
+            <div class="form-field">
+              <label for="adopt-name">Tu nombre</label>
+              <input type="text" id="adopt-name" required placeholder="Nombre y apellido">
+            </div>
+            <div class="form-field">
+              <label for="adopt-contact">Correo o teléfono</label>
+              <input type="text" id="adopt-contact" required placeholder="correo@ejemplo.com o 55 ...">
+            </div>
+            <div class="form-field">
+              <label for="adopt-note">Cuéntanos brevemente cómo es tu hogar</label>
+              <textarea id="adopt-note" rows="3" placeholder="Si vives en casa o departamento, si convives con otros animales y en qué horario te acomoda platicar."></textarea>
+            </div>
+            <p class="form-error" id="adopt-error" role="alert" hidden></p>
+            <div class="dialog-actions">
+              <button type="submit" class="btn-primary">Enviar solicitud de charla</button>
+              <button type="button" class="btn-ghost" id="dialog-book-visit">Reservar visita para verlo</button>
+            </div>
+          </form>
+
+          <div class="adopt-sent" id="adopt-sent" hidden>
+            <p id="adopt-sent-msg"></p>
+            <button type="button" class="btn-ghost" id="adopt-done">Volver a residentes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+  <script type="module" src="scene3d.js"></script>
+</body>
+</html>
