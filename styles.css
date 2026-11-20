@@ -1360,23 +1360,76 @@ textarea::placeholder {
 
   .header-inner {
     flex-wrap: wrap;
-    padding-block: 0.75rem;
+    gap: 0.65rem;
+    padding-block: 0.7rem;
   }
 
   .site-nav {
     width: 100%;
-    justify-content: space-between;
-    gap: 0.75rem;
+    justify-content: flex-start;
+    gap: 1.15rem;
     font-size: 0.88rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    padding-bottom: 0.15rem;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav a {
+    flex-shrink: 0;
   }
 
   .site-nav a.nav-cta {
-    padding: 0.42rem 0.8rem;
+    padding: 0.38rem 0.82rem;
+    margin-left: auto;
+  }
+
+  .hero {
+    padding: 1.5rem 0 3.25rem;
+  }
+
+  .hero-actions {
+    margin-bottom: 2rem;
+  }
+
+  .patio-controls {
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0.55rem;
+    gap: 0.45rem;
+  }
+
+  .patio-hint,
+  .patio-btn {
+    font-size: 0.74rem;
+    padding: 0.3rem 0.62rem;
   }
 
   .section-paper,
   .section-night {
     padding: 4rem 0;
+  }
+
+  .menu-header {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .tea-steam-svg {
+    width: 68px;
+    height: 56px;
+  }
+
+  .dish-dots {
+    display: none;
+  }
+
+  .menu-row {
+    justify-content: space-between;
   }
 
   .residents-gallery,
